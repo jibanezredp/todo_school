@@ -27,7 +27,7 @@ export const listAdded = (list) => ({
   list,
 });
 
-export const addList = (title) => {
+export const addList = (title, socket) => {
   const options = {
     method: 'POST',
     headers: {
@@ -37,8 +37,12 @@ export const addList = (title) => {
   };
   return (dispatch) => {
     dispatch(addingList());
-    fetchJSON('http://rp4.redpelicans.com:13004/api/todo/lists', options)
-      .then(resList => dispatch(listAdded(resList)));
+    //http://rp4.redpelicans.com:13004/api/todo/lists
+    fetchJSON('http://127.0.0.1:3000/todo/lists', options)
+      .then(resList => {
+        dispatch(listAdded(resList));
+        socket.emit('new');
+      });
   };
 };
 
@@ -57,9 +61,9 @@ export const removeList = (id) => {
   };
   return (dispatch) => {
     dispatch(removingList());
-    fetchJSON(`http://rp4.redpelicans.com:13004/api/todo/list/${id}`, options)
+    //http://rp4.redpelicans.com:13004/api/todo/list/${id}
+    fetchJSON(`http://127.0.0.1:3000/todo/list/${id}`, options)
       .then(response => dispatch(listRemoved(response.id)));
-    dispatch(listRemoved(id));
   };
 };
 
@@ -75,7 +79,8 @@ export const receiveLists = (json) => ({
 export const fetchLists = () => (
   (dispatch) => {
     dispatch(requestLists());
-    fetchJSON('http://rp4.redpelicans.com:13004/api/todo/lists')
+    //http://rp4.redpelicans.com:13004/api/todo/lists
+    fetchJSON('http://127.0.0.1:3000/todo/lists')
       .then(resLists => dispatch(receiveLists(resLists)));
   }
 );

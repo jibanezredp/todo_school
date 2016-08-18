@@ -27,7 +27,7 @@ class TaskList extends React.Component {
         <div className='tasks'>
           {taskElems}
         </div>
-        <AddTask listId={this.props.list.id} onAddTask={this.props.onAddTask} />
+        <AddTask {...this.props} listId={this.props.list.id} onAddTask={this.props.onAddTask} />
       </div>
     );
   }

@@ -27,7 +27,7 @@ export const taskAdded = (task) => ({
   task,
 });
 
-export const addTask = (listId, text) => {
+export const addTask = (listId, text, socket) => {
   const options = {
     method: 'POST',
     headers: {
@@ -42,8 +42,12 @@ export const addTask = (listId, text) => {
   };
   return (dispatch) => {
     dispatch(addingTask());
-    fetchJSON('http://rp4.redpelicans.com:13004/api/todo/tasks', options)
-      .then(resTask => dispatch(taskAdded(resTask)));
+    //http://rp4.redpelicans.com:13004/api/todo/tasks
+    fetchJSON('http://127.0.0.1:3000/todo/tasks', options)
+      .then(resTask => {
+        dispatch(taskAdded(resTask));
+        socket.emit('new');
+      });
   };
 };
 
@@ -62,7 +66,8 @@ export const removeTask = (id) => {
   };
   return (dispatch) => {
     dispatch(removingTask());
-    fetchJSON(`http://rp4.redpelicans.com:13004/api/todo/task/${id}`, options)
+    //http://rp4.redpelicans.com:13004/api/todo/task/${id}
+    fetchJSON(`http://127.0.0.1:3000/todo/task/${id}`, options)
       .then(response => dispatch(taskRemoved(response.id)));
   };
 };
@@ -79,7 +84,8 @@ export const receiveTasks = (json) => ({
 export const fetchTasks = () => (
   (dispatch) => {
     dispatch(requestTasks());
-    fetchJSON('http://rp4.redpelicans.com:13004/api/todo/tasks')
+    //http://rp4.redpelicans.com:13004/api/todo/tasks
+    fetchJSON('http://127.0.0.1:3000/todo/tasks')
       .then(resTasks => dispatch(receiveTasks(resTasks)));
   }
 );

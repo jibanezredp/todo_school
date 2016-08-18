@@ -18,7 +18,7 @@ class AddTaskList extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onAddList(this.state.input);
+    this.props.onAddList(this.state.input, this.props.socket);
     this.setState({
       input: '',
     });
@@ -40,6 +40,7 @@ class AddTaskList extends React.Component {
 
 AddTaskList.propTypes = {
   onAddList: React.PropTypes.func.isRequired,
+  socket: React.PropTypes.object.isRequired,
 };
 
 export default AddTaskList;

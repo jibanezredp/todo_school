@@ -19,7 +19,8 @@
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
-    "redux-thunk": "^2.0.1"
+    "redux-thunk": "^2.0.1",
+    "socket.io": "^1.4.8"
   },
   "devDependencies": {
     "babel-cli": "^6.7.7",
@@ -42,6 +43,7 @@
     "isomorphic-fetch": "^2.2.1",
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
+    "ramda": "^0.21.0",
     "react-addons-test-utils": "^15.2.0",
     "reselect": "^2.5.3",
     "webpack": "^1.13.0",

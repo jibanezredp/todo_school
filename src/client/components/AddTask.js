@@ -18,7 +18,7 @@ class AddTask extends React.Component {
 
   handleAdd = (e) => {
     e.preventDefault();
-    this.props.onAddTask(this.props.listId, this.state.input);
+    this.props.onAddTask(this.props.listId, this.state.input, this.props.socket);
     this.setState({
       input: '',
     });
@@ -39,8 +39,9 @@ class AddTask extends React.Component {
 }
 
 AddTask.propTypes = {
-  listId: React.PropTypes.number.isRequired,
+  listId: React.PropTypes.string.isRequired,
   onAddTask: React.PropTypes.func.isRequired,
+  socket: React.PropTypes.object.isRequired,
 };
 
 export default AddTask;

@@ -13,7 +13,7 @@ const RemoveTask = ({ id, onRemove }) => {
 };
 
 RemoveTask.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.string.isRequired,
   onRemove: React.PropTypes.func.isRequired,
 };
 

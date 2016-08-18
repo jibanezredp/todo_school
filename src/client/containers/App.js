@@ -1,4 +1,5 @@
 import React from 'react';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import { getProps } from '../selectors';
 import Title from '../components/Title';
@@ -17,22 +18,27 @@ import {
   fetchTasks,
 } from '../actions/tasks';
 
+const socket = io('localhost:3000');
+
 class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchAll();
+    socket.on('new', () => {
+      this.props.fetchAll();
+    });
   }
 
   render() {
     return (
       <div className='todo-app'>
         <Title value='Todo App' />
-        <AddTaskList {...this.props} />
+        <AddTaskList {...this.props} socket={socket} />
         <div className='nav'>
           <Button className='refresh' onClick={this.props.fetchAll}>Refresh</Button>
           <Spinner {...this.props} />
         </div>
-        <TaskLists {...this.props} />
+        <TaskLists {...this.props} socket={socket} />
       </div>
     );
   }
@@ -49,14 +55,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchLists());
     dispatch(fetchTasks());
   },
-  onAddList: (title) => {
-    dispatch(addList(title));
+  onAddList: (title, socket) => {
+    dispatch(addList(title, socket));
   },
   onRemoveList: (id) => {
     dispatch(removeList(id));
   },
-  onAddTask: (listId, text) => {
-    dispatch(addTask(listId, text));
+  onAddTask: (listId, text, socket) => {
+    dispatch(addTask(listId, text, socket));
   },
   onRemoveTask: (id) => {
     dispatch(removeTask(id));
